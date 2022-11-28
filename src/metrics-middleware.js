@@ -21,7 +21,8 @@ module.exports = (appVersion, projectName, framework = 'express') => {
             excludeRoutes,
             includeQueryParams,
             additionalLabels = [],
-            extractAdditionalLabelValuesFn
+            extractAdditionalLabelValuesFn,
+            labels
         } = options;
         debug(`Init metrics middleware with options: ${JSON.stringify(options)}`);
 
@@ -69,7 +70,7 @@ module.exports = (appVersion, projectName, framework = 'express') => {
             projectName
         );
 
-        Prometheus.collectDefaultMetrics({ timeout: defaultMetricsInterval, prefix: `${metricNames.defaultMetricsPrefix}` });
+        Prometheus.collectDefaultMetrics({ timeout: defaultMetricsInterval, prefix: `${metricNames.defaultMetricsPrefix}`, labels });
 
         PrometheusRegisterAppVersion(appVersion, metricNames.app_version);
 
